@@ -26,9 +26,7 @@ export const getById = async (req: Request, res: Response, next: NextFunction) =
 export const validateBody = (req: Request, _res: Response, next: NextFunction) => {
   try {
     const { body } = req;
-    const { error } = schemaProduct.validate(body);
-    console.log(error);
-    
+    const { error } = schemaProduct.validate(body);   
     if (error) return next(validateMsg(error));
     next();
   } catch (error) {
