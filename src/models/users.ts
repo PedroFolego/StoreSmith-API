@@ -7,3 +7,8 @@ export const create = async ({ username, classe, level, password }: User): Promi
     [username, classe, level, password],
   );
 };
+
+export const getAll = async (): Promise<User[]> => {
+  const [users] = await connection.execute('SELECT * FROM Trybesmith.Users');
+  return users as User[];
+};
