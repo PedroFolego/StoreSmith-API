@@ -21,7 +21,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
   try {
     const { username, classe, level, password } = req.body;
     await service.create({ username, classe, level, password });
-    const token = jwt.sign({ data: { username, classe } }, passwordJWT);
+    const token = jwt.sign({ data: username }, passwordJWT);
     return res.status(StatusCodes.CREATED).json({ token });
   } catch (error) {
     next(error);

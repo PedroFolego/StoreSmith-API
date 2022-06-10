@@ -1,7 +1,7 @@
 import { User } from '../interfaces';
 import connection from './connection';
 
-const getUser = async (
+export const getUser = async (
   { username, password }: Pick<User, 'username' | 'password'>,
 ): Promise<User[]> => {
   const [user] = await connection.execute(
@@ -11,4 +11,10 @@ const getUser = async (
   return user as User[];
 };
 
-export default getUser;
+export const validateUser = async (username: string): Promise<User[]> => {
+  const [user] = await connection.execute(
+    'SELECT * FROM Trybesmith.Users WHERE username = ?',
+    [username],
+  );
+  return user as User[];
+};
