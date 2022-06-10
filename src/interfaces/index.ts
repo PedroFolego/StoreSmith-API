@@ -8,3 +8,10 @@ export interface Product {
 export interface ErrorHandler extends Error {
   status: number,
 }
+
+export interface User {
+  username: string,
+  classe: string,
+  level: number,
+  password: string,
+}

@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import validateProduct from '../schemas/product';
-// import { Product } from '../interfaces';
+import schemaProduct from '../schemas/product';
 import * as service from '../services/products';
 import { validateMsg } from '../utils/functions';
 
@@ -27,7 +26,7 @@ export const getById = async (req: Request, res: Response, next: NextFunction) =
 export const validateBody = (req: Request, _res: Response, next: NextFunction) => {
   try {
     const { body } = req;
-    const { error } = validateProduct.validate(body);
+    const { error } = schemaProduct.validate(body);
     console.log(error);
     
     if (error) return next(validateMsg(error));
