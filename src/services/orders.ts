@@ -1,8 +1,11 @@
-import { Order } from '../interfaces';
-import model from '../models/orders';
+import jwt from 'jsonwebtoken';
+import { JwtPayloadHandler, Order } from '../interfaces';
+import * as model from '../models/orders';
+import { passwordJWT } from '../utils/constants';
+import * as modelLogin from '../models/login';
 
-const getAll = async (): Promise<Order[]> => {  
-  const orders = await model();
+export const getAll = async (): Promise<Order[]> => {  
+  const orders = await model.getAll();
   const fixOrders = orders.map(({ id, userId, productsIds }) => ({
     id,
     userId,
@@ -11,4 +14,11 @@ const getAll = async (): Promise<Order[]> => {
   return fixOrders as Order[];
 };
 
-export default getAll;
+export const findId = async (authorization: string): Promise<number> => {
+  const decoded = jwt.verify(authorization, passwordJWT) as JwtPayloadHandler;
+  const [user] = await modelLogin.validateUser(decoded.data);
+  return user.id;
+};
+
+export const create = async (id:number, products: number[]): Promise<void> => 
+  model.create(id, products);

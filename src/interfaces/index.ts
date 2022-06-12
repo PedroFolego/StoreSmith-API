@@ -18,6 +18,10 @@ export interface User {
   password: string,
 }
 
+export interface UserId extends User {
+  id: number
+}
+
 export interface Order {
   id: number,
   userId: number,

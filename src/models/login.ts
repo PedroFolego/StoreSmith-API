@@ -1,4 +1,4 @@
-import { User } from '../interfaces';
+import { User, UserId } from '../interfaces';
 import connection from './connection';
 
 export const getUser = async (
@@ -11,10 +11,10 @@ export const getUser = async (
   return user as User[];
 };
 
-export const validateUser = async (username: string): Promise<User[]> => {
+export const validateUser = async (username: string): Promise<UserId[]> => {
   const [user] = await connection.execute(
     'SELECT * FROM Trybesmith.Users WHERE username = ?',
     [username],
   );
-  return user as User[];
+  return user as UserId[];
 };
