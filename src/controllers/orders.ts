@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import schemaOrder from '../schemas/order';
 import * as service from '../services/orders';
+import { includesOne, onlyNumbers } from '../utils/constants';
 import { statusMessage, validateMsg } from '../utils/functions';
 
 export const getAll = async (_req: Request, res: Response, next: NextFunction) => {
@@ -30,10 +31,10 @@ export const validateProductsIds = (req: Request, res: Response, next: NextFunct
     const { productsIds } = req.body;
     const { error } = schemaOrder.validate({ productsIds });
     if (error) {
-      if (error.message.includes('does not contain 1')) {
+      if (error.message.includes(includesOne)) {
         return next(statusMessage(
           StatusCodes.UNPROCESSABLE_ENTITY, 
-          '"productsIds" must include only numbers',
+          onlyNumbers,
         ));
       }
       
