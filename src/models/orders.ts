@@ -1,14 +1,27 @@
-import { ResultSetHeader } from 'mysql2';
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
 import { Order } from '../interfaces';
 import connection from './connection';
-// import * as modelProduct from './products';
+import { getByOrderId } from './products';
 
 export const getAll = async (): Promise<Order[]> => {
-  const [orders] = await connection.execute(`
+  const [orders] = await connection.execute<RowDataPacket[]>(`
     SELECT o.id, o.userId, p.id as productsIds FROM Trybesmith.Orders AS o
     JOIN Trybesmith.Products AS p
       ON o.id = p.orderId
   `);
+  console.log(orders);
+  
+  const fixOrders = orders.map(async ({ id, userId }) => {
+    const products = await getByOrderId(id);
+    console.log(products);
+    
+    return {
+      id,
+      userId,
+      productsIds: [products],
+    };
+  });
+  console.log(fixOrders);
   return orders as Order[];
 };
 

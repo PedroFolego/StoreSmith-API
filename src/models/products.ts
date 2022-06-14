@@ -14,6 +14,12 @@ export const getById = async (id: string): Promise<Product> => {
   return product;
 };
 
+export const getByOrderId = async (orderId: number) => {
+  const [data] = await connection
+    .execute('SELECT id FROM Trybesmith.Products WHERE orderId = ?', [orderId]);
+    
+  return data;
+};
 export const create = async (
   { name, amount }: Pick<Product, 'name' | 'amount'>,
 ): Promise<Product> => {
