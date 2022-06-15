@@ -19,6 +19,22 @@ cd StoreSmith-API/
 npm install
 ``` 
 
+## Criando o Banco de Dados (Opcional)
+
+* Abra o arquivo StoreSmith.sql e execute as querys para preencher o banco com valores iniciais.  
+
+## Criando gerenciamento de ambiente
+
+* Crie um arquivo na raiz do projeto chamado '.env' e preencha com suas variáveis de ambiente.
+
+```
+PORT=numeroDaPorta
+MYSQL_HOST=host
+MYSQL_USER=userSQL
+MYSQL_PASSWORD=passwordSQL
+```
+
+
 ## Executando aplicação
 
 * Para rodar o back-end:
